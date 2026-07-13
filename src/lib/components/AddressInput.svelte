@@ -1,10 +1,8 @@
 <script lang="ts">
-	import { createEventDispatcher } from 'svelte';
+	let { onconnected }: { onconnected?: (detail: { address: string }) => void } = $props();
 
 	let address = $state('');
 	let error = $state('');
-
-	const emit = createEventDispatcher<{ connected: { address: string } }>();
 
 	function handleSubmit(e: Event) {
 		e.preventDefault();
@@ -14,7 +12,7 @@
 			error = 'Invalid Ethereum address (must be 0x followed by 40 hex characters)';
 			return;
 		}
-		emit('connected', { address: addr });
+		onconnected?.({ address: addr });
 	}
 </script>
 

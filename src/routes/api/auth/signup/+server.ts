@@ -41,6 +41,7 @@ export async function POST({ cookies, request }: { cookies: any; request: Reques
 		path: '/',
 		httpOnly: true,
 		sameSite: 'lax',
+		secure: true,
 		maxAge: 60 * 60 * 24 * 7
 	});
 

@@ -1,8 +1,7 @@
 <script lang="ts">
-	let { done = false }: { done?: boolean } = $props();
 </script>
 
-<div class="loader" class:done>
+<div class="loader">
 	<div class="loader-mark">
 		<div class="loader-ring"></div>
 		<div class="loader-wave">
@@ -23,8 +22,6 @@
 		gap: 1.2rem;
 		transition: opacity .6s ease, visibility .6s ease;
 	}
-	.loader.done { opacity: 0; visibility: hidden; }
-
 	.loader-mark { position: relative; width: 90px; height: 90px; display: grid; place-items: center; }
 	.loader-ring {
 		position: absolute; inset: 0;

@@ -78,10 +78,10 @@ class PortfolioStore {
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify(data)
 		});
-		if (!res.ok) throw new Error((await res.json()).error);
-		const holding = await res.json();
-		this.holdings = [holding, ...this.holdings];
-		return holding;
+		const body = await res.json();
+		if (!res.ok) throw new Error(body.error);
+		this.holdings = [body, ...this.holdings];
+		return body;
 	}
 
 	async removeHolding(id: string) {
@@ -95,9 +95,9 @@ class PortfolioStore {
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({ coinId })
 		});
-		if (!res.ok) throw new Error((await res.json()).error);
-		const entry = await res.json();
-		this.watchlist = [entry, ...this.watchlist];
+		const body = await res.json();
+		if (!res.ok) throw new Error(body.error);
+		this.watchlist = [body, ...this.watchlist];
 	}
 
 	async removeFromWatchlist(id: string) {
@@ -114,8 +114,9 @@ class PortfolioStore {
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({ address })
 			});
-			if (!res.ok) throw new Error((await res.json()).error);
-			this.walletData = await res.json();
+			const body = await res.json();
+			if (!res.ok) throw new Error(body.error);
+			this.walletData = body;
 
 			const existing = new Set(this.holdings.map((h: any) => h.coinId + '|' + (h.source || '')));
 

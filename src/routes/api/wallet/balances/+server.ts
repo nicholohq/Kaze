@@ -1,7 +1,8 @@
 import { json } from '@sveltejs/kit';
 import { getEthBalance, getTokenBalances } from '$lib/server/alchemy.js';
 
-export async function POST({ request }: { request: Request }) {
+export async function POST({ locals, request }: { locals: any; request: Request }) {
+	if (!locals.user) return json({ error: 'Not authenticated.' }, { status: 401 });
 	const { address } = await request.json();
 
 	if (!address || !/^0x[a-fA-F0-9]{40}$/.test(address)) {

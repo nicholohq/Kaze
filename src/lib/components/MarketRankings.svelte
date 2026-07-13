@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { portfolio } from '$lib/stores/portfolio.svelte.js';
-	import Sparkline from './Sparkline.svelte';
 
 	let search = $state('');
 	let showCount = $state(20);
@@ -18,7 +17,9 @@
 	async function addToWatchlist(coinId: string) {
 		try {
 			await portfolio.addToWatchlist(coinId);
-		} catch {}
+		} catch (e) {
+			console.error('Failed to add to watchlist:', e);
+		}
 	}
 
 	function loadMore() {

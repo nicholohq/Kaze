@@ -29,13 +29,17 @@
 		};
 	});
 
-	async function onWalletConnected(event: CustomEvent<{ address: string }>) {
-		const { address } = event.detail;
+	async function onWalletConnected(detail: { address: string }) {
+		const { address } = detail;
 		importMessage = '';
-		await portfolio.importWallet(address);
-		if (portfolio.walletData) {
-			const short = address.slice(0, 6) + '...' + address.slice(-4);
-			importMessage = `Imported wallet ${short}`;
+		try {
+			await portfolio.importWallet(address);
+			if (portfolio.walletData) {
+				const short = address.slice(0, 6) + '...' + address.slice(-4);
+				importMessage = `Imported wallet ${short}`;
+			}
+		} catch (e: any) {
+			importMessage = `Import failed: ${e.message}`;
 		}
 		showWalletImport = false;
 	}
@@ -64,9 +68,9 @@
 		<div class="wallet-section panel reveal" use:reveal>
 			<h3>Import Wallet</h3>
 			<p class="desc">Import holdings from MetaMask or any Ethereum address.</p>
-			<WalletConnect on:connected={onWalletConnected} />
+			<WalletConnect onconnected={onWalletConnected} />
 			<div class="divider"><span>or</span></div>
-			<AddressInput on:connected={onWalletConnected} />
+			<AddressInput onconnected={onWalletConnected} />
 		</div>
 	{/if}
 

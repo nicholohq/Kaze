@@ -1,10 +1,8 @@
 <script lang="ts">
-	import { createEventDispatcher } from 'svelte';
+	let { onconnected }: { onconnected?: (detail: { address: string }) => void } = $props();
 
 	let connecting = $state(false);
 	let error = $state('');
-
-	const emit = createEventDispatcher<{ connected: { address: string } }>();
 
 	async function connectMetaMask() {
 		connecting = true;
@@ -17,7 +15,7 @@
 			}
 			const accounts: string[] = await eth.request({ method: 'eth_requestAccounts' });
 			if (accounts.length > 0) {
-				emit('connected', { address: accounts[0] });
+				onconnected?.({ address: accounts[0] });
 			}
 		} catch (err: any) {
 			error = err.message || 'Failed to connect wallet';

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onDestroy } from 'svelte';
 	import { portfolio } from '$lib/stores/portfolio.svelte.js';
 	import { createChart, type IChartApi, type ISeriesApi } from 'lightweight-charts';
 
@@ -29,16 +29,8 @@
 
 	let hasHoldings = $derived(portfolio.holdings.length > 0);
 
-	$effect(() => {
-		if (!hasHoldings || !series) return;
-		const days = activeTF === '1D' ? 1 : activeTF === '1W' ? 7 : activeTF === '1M' ? 30 : activeTF === '3M' ? 90 : activeTF === '1Y' ? 365 : 730;
-		series.setData(generateMockData(days));
-		chart?.timeScale().fitContent();
-	});
-
-	onMount(() => {
-		if (!hasHoldings) return;
-
+	function initChart() {
+		if (chart) return;
 		chart = createChart(chartContainer, {
 			width: chartContainer.clientWidth,
 			height: 300,
@@ -65,18 +57,27 @@
 			priceFormat: { type: 'price', precision: 2, minMove: 0.01 }
 		});
 
-		series.setData(generateMockData(7));
-		chart.timeScale().fitContent();
-
 		const observer = new ResizeObserver(() => {
 			chart?.applyOptions({ width: chartContainer.clientWidth });
 		});
 		observer.observe(chartContainer);
 
-		return () => {
+		onDestroy(() => {
 			observer.disconnect();
 			chart?.remove();
-		};
+		});
+	}
+
+	$effect(() => {
+		if (!hasHoldings || !chartContainer) return;
+		initChart();
+	});
+
+	$effect(() => {
+		if (!hasHoldings || !series) return;
+		const days = activeTF === '1D' ? 1 : activeTF === '1W' ? 7 : activeTF === '1M' ? 30 : activeTF === '3M' ? 90 : activeTF === '1Y' ? 365 : 730;
+		series.setData(generateMockData(days));
+		chart?.timeScale().fitContent();
 	});
 </script>
 

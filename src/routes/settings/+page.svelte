@@ -9,7 +9,6 @@
 	import AddressInput from '$lib/components/AddressInput.svelte';
 	import { reveal } from '$lib/actions.js';
 
-	let currency = $state('usd');
 	let walletAddress = $state('');
 
 	onMount(() => {
@@ -17,8 +16,9 @@
 		walletAddress = auth.user?.walletAddress || '';
 	});
 
-	function onWalletConnected(event: CustomEvent<{ address: string }>) {
-		walletAddress = event.detail.address;
+	function onWalletConnected(detail: { address: string }) {
+		walletAddress = detail.address;
+		// TODO: persist wallet address to user profile via API
 	}
 </script>
 
@@ -43,24 +43,13 @@
 			<p class="address">Connected: <code>{walletAddress}</code></p>
 		{:else}
 			<p class="desc">Connect a wallet to import holdings.</p>
-			<WalletConnect on:connected={onWalletConnected} />
+			<WalletConnect onconnected={onWalletConnected} />
 			<div class="divider"><span>or</span></div>
-			<AddressInput on:connected={onWalletConnected} />
+			<AddressInput onconnected={onWalletConnected} />
 		{/if}
 	</div>
 
-	<div class="section panel reveal" use:reveal>
-		<h2 class="section-title" data-kanji="示">Display</h2>
-		<div class="field">
-			<label for="currency">Currency</label>
-			<select id="currency" class="input" bind:value={currency}>
-				<option value="usd">USD</option>
-				<option value="eur">EUR</option>
-				<option value="gbp">GBP</option>
-				<option value="jpy">JPY</option>
-			</select>
-		</div>
-	</div>
+
 </main>
 
 <style>
@@ -75,6 +64,4 @@
 	.address code { background: var(--linen-2); padding: 2px var(--s1); border-radius: 4px; word-break: break-all; font-size: 0.8rem; }
 	.divider { display: flex; align-items: center; gap: var(--s2); margin: var(--s3) 0; color: var(--wave-mid); font-size: 0.82rem; }
 	.divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--linen-2); }
-	.field { display: flex; flex-direction: column; gap: var(--s1); }
-	.field label { font-size: 0.8rem; font-weight: 700; letter-spacing: 0.5px; color: var(--wave-mid); }
 </style>

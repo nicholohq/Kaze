@@ -2,15 +2,25 @@ const BASE = 'https://api.coingecko.com/api/v3';
 
 const cache = new Map<string, { data: any; expiry: number }>();
 
+const pendingPromises = new Map<string, Promise<any>>();
+
 function withCache<T>(key: string, ttlMs: number, fn: () => Promise<T>): Promise<T> {
 	const cached = cache.get(key);
 	if (cached && cached.expiry > Date.now()) {
 		return Promise.resolve(cached.data as T);
 	}
-	return fn().then(data => {
+	const pending = pendingPromises.get(key);
+	if (pending) return pending as Promise<T>;
+	const promise = fn().then(data => {
 		cache.set(key, { data, expiry: Date.now() + ttlMs });
+		pendingPromises.delete(key);
 		return data;
+	}).catch(err => {
+		pendingPromises.delete(key);
+		throw err;
 	});
+	pendingPromises.set(key, promise);
+	return promise;
 }
 
 export interface CoinMarketData {
@@ -59,15 +69,19 @@ export async function fetchTopCoins(perPage: number = 100): Promise<CoinMarketDa
 }
 
 export async function fetchCoinDetail(coinId: string): Promise<CoinDetail> {
-	return fetchJson(
-		`${BASE}/coins/${coinId}?localization=false&tickers=false&community_data=false&developer_data=false&sparkline=true`
-	) as Promise<CoinDetail>;
+	return withCache(`detail-${coinId}`, 5 * 60 * 1000, () =>
+		fetchJson(
+			`${BASE}/coins/${encodeURIComponent(coinId)}?localization=false&tickers=false&community_data=false&developer_data=false&sparkline=true`
+		) as Promise<CoinDetail>
+	);
 }
 
 export async function fetchPriceHistory(coinId: string, days: number = 7): Promise<{ prices: [number, number][] }> {
-	return fetchJson(
-		`${BASE}/coins/${coinId}/market_chart?vs_currency=usd&days=${days}`
-	) as Promise<{ prices: [number, number][] }>;
+	return withCache(`history-${coinId}-${days}`, 5 * 60 * 1000, () =>
+		fetchJson(
+			`${BASE}/coins/${encodeURIComponent(coinId)}/market_chart?vs_currency=usd&days=${days}`
+		) as Promise<{ prices: [number, number][] }>
+	);
 }
 
 export async function fetchSimplePrice(coinIds: string[]): Promise<Record<string, { usd: number; usd_24h_change?: number }>> {

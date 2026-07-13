@@ -1,7 +1,5 @@
 import { Alchemy, Network } from 'alchemy-sdk';
 
-const API_KEY = process.env.ALCHEMY_API_KEY || 'demo';
-
 export interface TokenBalance {
 	contractAddress: string | null;
 	symbol: string;
@@ -11,27 +9,31 @@ export interface TokenBalance {
 	decimals: number;
 }
 
-const settings = {
-	apiKey: API_KEY,
-	network: Network.ETH_MAINNET
-};
+let _alchemy: Alchemy | null = null;
 
-const alchemy = new Alchemy(settings);
+function getAlchemy() {
+	if (!_alchemy) {
+		const key = process.env.ALCHEMY_API_KEY;
+		if (!key) throw new Error('ALCHEMY_API_KEY environment variable is required');
+		_alchemy = new Alchemy({ apiKey: key, network: Network.ETH_MAINNET });
+	}
+	return _alchemy;
+}
 
 export async function getEthBalance(address: string): Promise<string> {
-	const balance = await alchemy.core.getBalance(address);
+	const balance = await getAlchemy().core.getBalance(address);
 	return balance.toString();
 }
 
 export async function getTokenBalances(address: string): Promise<TokenBalance[]> {
-	const balances = await alchemy.core.getTokenBalances(address);
+	const balances = await getAlchemy().core.getTokenBalances(address);
 	const tokens: TokenBalance[] = [];
 
 	const metadataPromises = balances.tokenBalances
 		.filter(t => t.tokenBalance !== '0')
 		.map(async (token) => {
 			try {
-				const metadata = await alchemy.core.getTokenMetadata(token.contractAddress);
+				const metadata = await getAlchemy().core.getTokenMetadata(token.contractAddress);
 				return {
 					contractAddress: token.contractAddress,
 					symbol: metadata.symbol || 'UNKNOWN',
