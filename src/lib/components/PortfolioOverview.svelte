@@ -33,7 +33,7 @@
 </div>
 
 <style>
-	.overview { position: relative; padding: var(--s5); text-align: center; }
+	.overview { position: relative; padding: var(--s5); text-align: center; flex: 1; display: flex; flex-direction: column; justify-content: center; }
 	.overview-seal { position: absolute; top: -14px; right: -12px; z-index: 2; }
 	h2 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; color: var(--wave-mid); margin-bottom: var(--s2); color: var(--koshi); }
 	h2::before { font-size: 0.7rem; letter-spacing: 4px; }

@@ -187,8 +187,8 @@
 	/* ============ GRID (more Ma) ============ */
 	.grid { display: grid; grid-template-columns: 1fr; gap: var(--s4); }
 	@media (min-width: 768px) {
-		.grid { grid-template-columns: 280px 1fr; gap: var(--s5); }
-		.grid-overview { grid-column: 1; grid-row: 1; }
+		.grid { grid-template-columns: 280px 1fr; gap: var(--s5); align-items: stretch; }
+		.grid-overview { grid-column: 1; grid-row: 1; display: flex; flex-direction: column; }
 		.grid-chart { grid-column: 2; grid-row: 1; }
 		.grid-main { grid-column: 1 / -1; }
 		.grid-side { grid-column: 1 / -1; }
