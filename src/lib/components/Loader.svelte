@@ -4,9 +4,13 @@
 <div class="loader">
 	<div class="loader-mark">
 		<div class="loader-ring"></div>
-		<div class="loader-wave">
+		<div class="loader-lattice">
 			<svg viewBox="0 0 40 40" width="40" height="40" fill="none" stroke="var(--vermilion)" stroke-width="2" stroke-linecap="round">
-				<path class="wave-path" d="M4 28 C10 18, 14 14, 20 16 C26 18, 30 14, 36 20" />
+				<rect class="lattice-bar" x="4" y="4" width="4" height="32" rx="1" />
+				<rect class="lattice-bar" x="12" y="4" width="3" height="32" rx="1" />
+				<rect class="lattice-bar" x="18" y="4" width="5" height="32" rx="1" />
+				<rect class="lattice-bar" x="26" y="4" width="3" height="32" rx="1" />
+				<rect class="lattice-bar" x="32" y="4" width="4" height="32" rx="1" />
 			</svg>
 		</div>
 	</div>
@@ -29,13 +33,17 @@
 		border-top-color: transparent; border-right-color: transparent;
 		animation: spin 1s linear infinite;
 	}
-	.loader-wave { position: relative; animation: pulse 1.4s ease-in-out infinite; }
+	.loader-lattice { position: relative; animation: pulse 1.4s ease-in-out infinite; }
 
-	.wave-path {
-		stroke-dasharray: 60;
-		stroke-dashoffset: 0;
-		animation: wave-draw 2s ease-in-out infinite;
+	.lattice-bar {
+		animation: bar-draw 2s ease-in-out infinite;
+		transform-origin: center;
 	}
+	.lattice-bar:nth-child(1) { animation-delay: 0s; }
+	.lattice-bar:nth-child(2) { animation-delay: 0.15s; }
+	.lattice-bar:nth-child(3) { animation-delay: 0.3s; }
+	.lattice-bar:nth-child(4) { animation-delay: 0.45s; }
+	.lattice-bar:nth-child(5) { animation-delay: 0.6s; }
 
 	.loader-kanji {
 		font-family: var(--serif); font-size: 3rem; color: var(--gold);
@@ -45,9 +53,9 @@
 
 	@keyframes spin { to { transform: rotate(360deg); } }
 	@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .4; } }
-	@keyframes wave-draw {
-		0% { stroke-dashoffset: 60; }
-		50% { stroke-dashoffset: 0; }
-		100% { stroke-dashoffset: 60; }
+	@keyframes bar-draw {
+		0% { opacity: 0.1; transform: scaleY(0.2); }
+		50% { opacity: 1; transform: scaleY(1); }
+		100% { opacity: 0.1; transform: scaleY(0.2); }
 	}
 </style>

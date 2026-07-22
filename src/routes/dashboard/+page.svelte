@@ -6,6 +6,7 @@
 	import Nav from '$lib/components/Nav.svelte';
 	import InkWash from '$lib/components/InkWash.svelte';
 	import JapanesePattern from '$lib/components/JapanesePattern.svelte';
+	import KoshiPattern from '$lib/components/KoshiPattern.svelte';
 	import WalletConnect from '$lib/components/WalletConnect.svelte';
 	import AddressInput from '$lib/components/AddressInput.svelte';
 	import PortfolioOverview from '$lib/components/PortfolioOverview.svelte';
@@ -54,9 +55,9 @@
 <Nav />
 
 <header class="dash-hero">
-	<InkWash position="left" intensity={0.12} color="30,77,123" />
+	<InkWash position="left" intensity={0.12} color="90,62,40" />
 	<div class="dash-hero__pattern" aria-hidden="true">
-		<JapanesePattern pattern="seigaiha" opacity={0.05} color="var(--wave-deep)" />
+		<KoshiPattern />
 	</div>
 	<span class="dash-hero__watermark" aria-hidden="true">風</span>
 	<div class="dash-hero__inner">
@@ -132,6 +133,8 @@
 		position: absolute; inset: 0 0 0 auto; width: 38%; z-index: 0;
 		-webkit-mask-image: linear-gradient(90deg, transparent, #000 60%);
 		mask-image: linear-gradient(90deg, transparent, #000 60%);
+		color: var(--koshi);
+		opacity: 0.15;
 	}
 	.dash-hero__watermark {
 		position: absolute; right: 0.1em; top: 50%; transform: translateY(-50%);
@@ -139,6 +142,7 @@
 		font-size: clamp(7rem, 18vw, 12rem); line-height: 1;
 		color: var(--wave-deep); opacity: 0.05;
 		pointer-events: none; user-select: none; z-index: 0;
+		color: var(--koshi);
 	}
 	.dash-hero__inner {
 		position: relative; z-index: 1;

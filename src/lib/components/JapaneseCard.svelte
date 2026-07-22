@@ -62,7 +62,7 @@
 	.jp-card--shikishi {
 		background: var(--kinari);
 		border: var(--border-thin);
-		box-shadow: var(--shadow-ukiyoe);
+		box-shadow: var(--shadow-kirigami);
 		padding: var(--s5);
 	}
 	.jp-card--shikishi::after {
@@ -122,7 +122,7 @@
 	}
 	.jp-card__sub {
 		font-size: 0.82rem;
-		color: var(--wave-mid);
+		color: var(--engawa);
 		margin-top: 0.15rem;
 	}
 	.jp-card__body { position: relative; }

@@ -4,7 +4,7 @@
 	import { portfolio } from '$lib/stores/portfolio.svelte.js';
 	import { goto } from '$app/navigation';
 	import Nav from '$lib/components/Nav.svelte';
-	import GreatWaveArt from '$lib/components/GreatWaveArt.svelte';
+	import KoshiBanner from '$lib/components/KoshiBanner.svelte';
 	import WalletConnect from '$lib/components/WalletConnect.svelte';
 	import AddressInput from '$lib/components/AddressInput.svelte';
 	import { reveal } from '$lib/actions.js';
@@ -27,7 +27,7 @@
 </svelte:head>
 
 <Nav />
-<GreatWaveArt />
+<KoshiBanner />
 
 <main class="settings">
 	<h1 class="section-title" data-kanji="設">Settings</h1>

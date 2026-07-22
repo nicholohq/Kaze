@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte';
 	import { auth } from '$lib/stores/auth.svelte.js';
 	import { goto } from '$app/navigation';
-	import SeigaihaPattern from './SeigaihaPattern.svelte';
+	import KoshiPattern from './KoshiPattern.svelte';
 
 	let scrolled = $state(false);
 
@@ -21,11 +21,14 @@
 </script>
 
 <nav class:scrolled>
-	<div class="nav-pattern" aria-hidden="true"><SeigaihaPattern /></div>
+	<div class="nav-pattern" aria-hidden="true"><KoshiPattern /></div>
 	<div class="nav-inner">
 		<a href="/dashboard" class="brand">
 			<svg viewBox="0 0 24 24" width="20" height="20" fill="var(--wave-foam)" aria-hidden="true">
-				<path d="M2 18 C8 12, 12 10, 18 12 C14 14, 10 16, 8 18 C6 20, 4 20, 2 18 Z" />
+				<rect x="3" y="4" width="4" height="16" rx="0.5" />
+				<rect x="9" y="4" width="3" height="16" rx="0.5" />
+				<rect x="14" y="4" width="5" height="16" rx="0.5" />
+				<rect x="21" y="4" width="2" height="16" rx="0.5" />
 			</svg>
 			Kaze
 		</a>

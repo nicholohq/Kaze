@@ -1,19 +1,24 @@
 :root {
-  --wave-deep: #1a2a3a;
-  --wave-mid: #2c4a6a;
-  --wave-foam: #e8f0f8;
-  --wave-spray: #f5f0e8;
+  /* ============ 町家 — MACHIYA EARTH TONES ============ */
+  --wave-deep: #2c1e12;   /* Dark wood (moya) */
+  --wave-mid: #6b5744;    /* Aged timber */
+  --wave-foam: #f5efe4;   /* Warm paper (washi) */
+  --wave-spray: #e8dfd0;  /* Straw (tatami) */
   --vermilion: #c41a1a;
   --vermilion-2: #a01414;
   --gold: #c5a059;
-  --ink: #1a1a1a;
+  --ink: #1c1610;         /* Warmer sumi ink */
   --matcha: #6b8f5e;
   --wasabi: #8fc98a;
   --crimson: #dc3545;
-  --paper: #ffffff;
-  --charcoal: #2c2c2c;
-  --linen: #f5f0e8;
-  --linen-2: #ece4d6;
+  --paper: #faf6ee;       /* Warm white (shoji) */
+  --charcoal: #2c2218;    /* Warm charcoal */
+  --linen: #f0e8d8;       /* Warm linen */
+  --linen-2: #e4dac8;     /* Warmer linen */
+  --koshi: #5a3e28;       /* Lattice wood brown */
+  --tatami: #c8b88a;      /* Tatami mat surface */
+  --shoji: #f5f0e4;       /* Translucent paper */
+  --engawa: #8b7355;      /* Veranda wood */
   --serif: 'Noto Serif JP', 'Times New Roman', serif;
   --gothic: 'Zen Kaku Gothic New', 'Segoe UI', system-ui, sans-serif;
   --s1: 4px;
@@ -45,10 +50,10 @@
   --kincha: #c5a059;      /* 金茶 — gold-tea (alias of --gold) */
 
   /* Seasonal gradient presets */
-  --grad-haru: linear-gradient(135deg, var(--sakura) 0%, var(--wisteria) 100%);   /* 春 spring */
-  --grad-natsu: linear-gradient(135deg, var(--ao) 0%, var(--wasabi) 100%);        /* 夏 summer */
-  --grad-aki: linear-gradient(135deg, var(--chabu) 0%, var(--vermilion) 100%);    /* 秋 autumn */
-  --grad-fuyu: linear-gradient(135deg, var(--wave-mid) 0%, var(--wave-deep) 100%);/* 冬 winter */
+  --grad-haru: linear-gradient(135deg, var(--sakura) 0%, var(--wisteria) 100%);
+  --grad-natsu: linear-gradient(135deg, var(--ao) 0%, var(--wasabi) 100%);
+  --grad-aki: linear-gradient(135deg, var(--chabu) 0%, var(--vermilion) 100%);
+  --grad-fuyu: linear-gradient(135deg, var(--wave-mid) 0%, var(--wave-deep) 100%);
 
   /* ============ 文字 — JAPANESE TYPE SCALE ============ */
   --kanji-display: clamp(4rem, 12vw, 10rem);
@@ -63,11 +68,11 @@
   --border-origami: 1px solid var(--gold);
   --border-ukiyoe: 4px solid var(--charcoal);
 
-  /* ============ 影 — SHADOWS (soft ukiyo-e depth) ============ */
-  --shadow-kirigami: 0 2px 12px rgba(26, 42, 58, 0.08);
-  --shadow-ukiyoe: 0 4px 24px rgba(26, 42, 58, 0.12);
-  --shadow-emaki: 0 8px 32px rgba(26, 42, 58, 0.16);
-  --shadow-byobu: 0 16px 48px rgba(26, 42, 58, 0.2);
+  /* ============ 影 — SHADOWS (warm machiya depth) ============ */
+  --shadow-kirigami: 0 2px 12px rgba(44, 30, 18, 0.08);
+  --shadow-ukiyoe: 0 4px 24px rgba(44, 30, 18, 0.12);
+  --shadow-emaki: 0 8px 32px rgba(44, 30, 18, 0.16);
+  --shadow-byobu: 0 16px 48px rgba(44, 30, 18, 0.2);
 }
 
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -79,7 +84,7 @@ body {
   font-family: var(--gothic);
   line-height: 1.7;
   min-height: 100vh;
-  background-image: radial-gradient(circle at 1px 1px, rgba(26,42,58,0.05) 1px, transparent 0);
+  background-image: radial-gradient(circle at 1px 1px, rgba(44,30,18,0.04) 1px, transparent 0);
   background-size: 22px 22px;
 }
 
@@ -180,8 +185,8 @@ a { color: var(--vermilion); }
   background-image:
     radial-gradient(circle at 20% 30%, rgba(139,115,85,0.05) 0, transparent 45%),
     radial-gradient(circle at 80% 70%, rgba(139,115,85,0.05) 0, transparent 45%),
-    repeating-linear-gradient(0deg, rgba(28,28,28,0.014) 0 1px, transparent 1px 3px),
-    repeating-linear-gradient(90deg, rgba(28,28,28,0.012) 0 1px, transparent 1px 4px);
+    repeating-linear-gradient(0deg, rgba(44,30,18,0.012) 0 1px, transparent 1px 3px),
+    repeating-linear-gradient(90deg, rgba(44,30,18,0.010) 0 1px, transparent 1px 4px);
   border-radius: inherit;
 }
 .washi > * { position: relative; z-index: 1; }
@@ -192,9 +197,9 @@ a { color: var(--vermilion); }
   background-color: var(--linen);
   background-image:
     radial-gradient(circle at 15% 20%, rgba(139,115,85,0.06) 0, transparent 40%),
-    radial-gradient(circle at 85% 80%, rgba(30,77,123,0.05) 0, transparent 40%),
-    repeating-linear-gradient(0deg, rgba(28,28,28,0.012) 0 1px, transparent 1px 3px),
-    radial-gradient(circle at 1px 1px, rgba(26,42,58,0.05) 1px, transparent 0);
+    radial-gradient(circle at 85% 80%, rgba(90,62,40,0.05) 0, transparent 40%),
+    repeating-linear-gradient(0deg, rgba(44,30,18,0.010) 0 1px, transparent 1px 3px),
+    radial-gradient(circle at 1px 1px, rgba(44,30,18,0.04) 1px, transparent 0);
   background-size: 100% 100%, 100% 100%, 3px 3px, 22px 22px;
 }
 
